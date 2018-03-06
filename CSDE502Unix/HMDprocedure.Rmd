@@ -1,0 +1,100 @@
+---
+title: ''
+author: "Cori Mar"
+date: "11/30/2017"
+output:
+  html_document: default
+  pdf_document: default
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#### Using the Human Mortality Data
+
+1. Go to www.mortality.org
+2. Create a user name and password
+3. Login
+4. Choose country: Australia
+5. Choose data: Births
+6. Download file: Australia_Births_Raw.txt
+7. Strip header from file and save: Australia_Births.dat
+
+```{r}
+### read data file
+dd <- read.table(file="Australia_Births.dat", header=TRUE)
+
+```
+
+#### Plot Australia births
+
+```{r, echo=FALSE}
+
+### plot total
+plot(dd$Year, dd$Total/1000, ylim=c(0,325), type="l", las=1,
+     xlab="Year", ylab="Thousands",main="Australia: Births")
+
+### grid lines
+segments(x0=seq(1860, 2000, 20), x1=seq(1860, 2000, 20), y0=-10, y1=500, lty="dotted")
+segments(y0=seq(0, 3000, 50), y1=seq(0, 3000, 50), x0=-10, x1=3000, lty="dotted")
+
+### plot females
+lines(dd$Year, dd$Female/1000, col="red")
+### plot males
+lines(dd$Year, dd$Male/1000, col="blue")
+
+legend(1860,300, legend=c("Total","Male","Female"), lty=1, col=c("black","blue","red"))
+
+```
+
+#### Read table of Australia Life expectancy at birth
+
+```{r}
+dd.le <- read.table(file="Australia_LifeExpBirth_1x10.dat", header = TRUE)
+```
+  
+  
+#### Print table of Australia Life expectancy at birth
+
+##### Raw output
+
+```{r}
+dd.le
+```
+
+##### Raw output without hashtags using comment=''
+
+```{r comment=''}
+dd.le
+```
+
+##### Prettier output using kable
+```{r results='asis'}
+library(knitr)
+kable(dd.le, caption="Australia Life Expectancy at Birth")
+```
+
+#### Regression 
+```{r}
+# regression births as a function of year
+fit <- lm(Total ~ Year, data=dd)
+```
+
+#### Regression output using kable
+
+```{r results='asis'}
+test <- summary(fit)
+kable(test$coefficients, caption="Regression Table")
+```
+
+#### Text with imbedded R
+
+The number of live births in Australia in `r dd$Year[1]` was `r dd$Total[1]`.  By `r dd$Year[nrow(dd)]`, this number was `r dd$Total[nrow(dd)]`.
+
+#### Text with imbedded R with numbers formatted with commas
+
+The number of live births in Australia in `r dd$Year[1]` was `r prettyNum(dd$Total[1],big.mark=",")`.  By `r dd$Year[nrow(dd)]`, this number was `r prettyNum(dd$Total[nrow(dd)],big.mark=",")`.
+
+

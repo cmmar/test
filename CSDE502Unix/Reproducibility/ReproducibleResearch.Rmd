@@ -1,0 +1,29 @@
+---
+title: ''
+author: "Cori Mar"
+date: "1/6/2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+##### **CSDE 502: Reproducible Research**
+**Cori Mar**  
+**January 2017**  
+  
+This is an R Markdown document: **ReproducibleResearch.Rmd**. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+  
+The purpose of this document is to introduce this topic in CSDE502 Winter 2017.  
+
+Data Steps  
+1. Start with Stata Wave 1 data file  
+2. Subset the data in Stata  
+3. Export data as .csv file  
+4. Read data into R   
+5. 
+```{r}
+
+```
+
